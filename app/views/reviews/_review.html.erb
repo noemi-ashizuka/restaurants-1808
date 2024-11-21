@@ -1,0 +1,4 @@
+<li>
+  <%= review.content %>
+  <%= link_to 'x', review_path(review), data: { turbo_method: :delete, turbo_confirm: 'Delete review?' } %>
+</li>

@@ -1,0 +1,8 @@
+<div class="container">
+  <h1><%= @restaurant.chef_name %></h1>
+  <p><%= @restaurant.name %></p>
+  <p><%= @restaurant.category %></p>
+  <p>
+    <%= link_to 'Back to restaurant', restaurant_path(@restaurant)  %>
+  </p>
+</div>

@@ -1,0 +1,57 @@
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://loremflickr.com/320/200/restaurant,<%= @restaurant.category.downcase %>/all?lock=<%= @restaurant.id %>);">
+  <div class="container">
+  </div>
+</div>
+<div class="container mt-2 mb-5">
+  <div class="row justify-content-around">
+    <div class="col-12 col-sm-8" data-controller="insert-review">
+      <p>
+        <%= link_to '< Restaurants', restaurants_path, class: 'btn-light opacity-25 text-decoration-none' %>
+      </p>
+      <div class="d-flex align-items-center">
+        <h1 class="m-0"><%= @restaurant.name %></h1>
+        <p class="m-0 ms-2" style="font-size: 0.8em">
+          <% @restaurant.rating.times do %>
+            <i class="fas fa-star"></i>
+          <% end %>
+          <% (5 - @restaurant.rating).times do %>
+            <i class="far fa-star"></i>
+          <% end %>
+        </p>
+      </div>
+      <p class="fw-lighter opacity-75 mt-2"><%= Faker::Restaurant.description  %></p>
+      <h3>
+        Reviews
+      </h3>
+      <ul data-insert-review-target='list'>
+        <% if @restaurant.reviews.any? %>
+          <% @restaurant.reviews.each do |review| %>
+            <%= render 'reviews/review', review: review %>
+          <% end %>
+        <% else %>
+          <li>No reviews yet</li>
+        <% end %>
+      </ul>
+      <button id='reviews' class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Add a Review
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+          <!-- <form action="" data-action="submit->insert-review#create"></form> -->
+          <!-- <form action="" data-insert-review-target="form"></form> -->
+          <%= simple_form_for [@restaurant, @review], data: { action: 'submit->insert-review#create', insert_review_target: 'form' } do |f| %>
+            <%= f.input :content, input_html: { class: 'thisishowtoaddacustomclass'} %>
+            <%= f.submit class: 'btn btn-info mt-2' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4 mt-5">
+      <%= render 'restaurants/side_info' %>
+    </p>
+  </div>
+</div>
+<div style="width: 100%; height: 600px;"
+  data-controller="map"
+  data-map-markers-value="<%= @markers.to_json %>"
+  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>"></div>
