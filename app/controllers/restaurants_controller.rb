@@ -14,7 +14,7 @@ class RestaurantsController < ApplicationController
 
   # '/restaurants'
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.all.order(created_at: :desc)
     # array of all of our lat lng
     @markers = @restaurants.geocoded.map do |restaurant|
       {
