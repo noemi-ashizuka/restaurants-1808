@@ -9,7 +9,11 @@ class RestaurantPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       # scope.all.order(created_at: :desc)
-      user.admin? ? scope.all : scope.where(user: user)
+      if user
+        user.admin? ? scope.all : scope.where(user: user)
+      else
+        scope.all
+      end
     end
   end
 
