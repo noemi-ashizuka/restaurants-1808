@@ -1,8 +1,10 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
     <h1>Restaurants</h1>
-    <%= link_to new_restaurant_path, class: 'text-dark text-decoration-none' do %>
-      <i class="fa-solid fa-plus"></i>
+    <% if policy(Restaurant).new? %>
+      <%= link_to new_restaurant_path, class: 'text-dark text-decoration-none' do %>
+        <i class="fa-solid fa-plus"></i>
+      <% end %>
     <% end %>
   </div>
   <div class="cards">

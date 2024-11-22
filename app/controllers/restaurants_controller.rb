@@ -14,7 +14,8 @@ class RestaurantsController < ApplicationController
 
   # '/restaurants'
   def index
-    @restaurants = Restaurant.all.order(created_at: :desc)
+    @restaurants = policy_scope(Restaurant) # calls the resolve method in the Scope class inside the policy
+    # @restaurants = Restaurant.all.order(created_at: :desc)
     # array of all of our lat lng
     @markers = @restaurants.geocoded.map do |restaurant|
       {
@@ -24,6 +25,7 @@ class RestaurantsController < ApplicationController
         marker_html: render_to_string(partial: "marker")
       }
     end
+
   end
 
   # '/restaurants/1'
@@ -37,12 +39,14 @@ class RestaurantsController < ApplicationController
         marker_html: render_to_string(partial: "marker")
       }
     ]
+    authorize @restaurant # calls the method show? in the restaurant_policy
   end
 
   # '/restaurants/new'
   def new
     # just for the form
     @restaurant = Restaurant.new
+    authorize @restaurant
   end
 
   # we cant get here by a link. we have to submit the form
@@ -54,6 +58,7 @@ class RestaurantsController < ApplicationController
     # if it doesnt save... show the form again
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant.user = current_user
+    authorize @restaurant
     if @restaurant.save
       # make a seperate request to go to the show page
       redirect_to restaurant_path(@restaurant)
@@ -66,11 +71,13 @@ class RestaurantsController < ApplicationController
   # '/restaurants/1/edit'
   def edit
     # just for the form
+    authorize @restaurant
   end
 
   # we cant get here by a link. we have to submit the form
   # no view for this, this redirects to another page
   def update
+    authorize @restaurant
     if @restaurant.update(restaurant_params)
       redirect_to restaurant_path(@restaurant)
     else
@@ -80,6 +87,7 @@ class RestaurantsController < ApplicationController
   end
 
   def destroy
+    authorize @restaurant
     @restaurant.destroy
     redirect_to restaurants_path, status: :see_other # redirect
   end

@@ -13,11 +13,15 @@
   <%= image_tag "https://kitt.lewagon.com/placeholder/users/#{@restaurant.user.username}", class: "avatar" %>
   <!-- edit and delete here-->
   <p>
+  <% if policy(@restaurant).edit? %>
     <%= link_to edit_restaurant_path(@restaurant), class: 'text-dark text-decoration-none' do %>
       <i class="fas fa-pencil-alt mx-1"></i>
     <% end %>
+  <% end %>
+  <% if policy(@restaurant).destroy? %>
     <%= link_to restaurant_path(@restaurant), class: 'text-dark text-decoration-none', data: { turbo_method: :delete, turbo_confirm: "Do you want to delete #{@restaurant.name}" } do %>
       <i class="fas fa-trash mx-1"></i>
     <% end %>
+  <% end %>
   </p>
 </div>

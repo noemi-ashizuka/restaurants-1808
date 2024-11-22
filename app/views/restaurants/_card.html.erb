@@ -1,4 +1,4 @@
-<div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://loremflickr.com/320/200/restaurant,<%= restaurant.category&.downcase %>/all?lock=<%= restaurant.id %>);">
+<div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://loremflickr.com/320/250/restaurant,<%= restaurant.category&.downcase %>/all?lock=<%= restaurant.id %>);">
   <%= link_to restaurant.name, restaurant_path(restaurant), class: 'text-decoration-none text-white' %>
   <div class="owner-img">
     <%= image_tag "https://kitt.lewagon.com/placeholder/users/#{restaurant.user.username}", class: "avatar" %>

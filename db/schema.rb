@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_20_093339) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_22_005019) do
   create_table "restaurants", force: :cascade do |t|
     t.string "name"
     t.integer "rating"
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_20_093339) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
+    t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
